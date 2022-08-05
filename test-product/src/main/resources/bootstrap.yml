@@ -1,0 +1,11 @@
+spring:
+  cloud:
+    nacos:
+       config:
+         server-addr: 192.168.137.101:8848
+         namespace: e880672c-4d8f-4e6d-bd11-393be9a6a7a5
+         group: dev
+         prefix: test-product
+         file-extension: yml
+
+

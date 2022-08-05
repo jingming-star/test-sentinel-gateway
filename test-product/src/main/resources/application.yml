@@ -1,0 +1,15 @@
+server:
+  port: 8001
+spring:
+  application:
+    name: test-product
+  cloud:
+    inetutils:
+      preferred-networks: 20.30.3\.(.*)
+    nacos:
+      discovery:
+        server-addr: 192.168.137.101:8848
+    sentinel:
+      transport:
+        dashboard: http://192.168.137.101:8080
+        port: 8719

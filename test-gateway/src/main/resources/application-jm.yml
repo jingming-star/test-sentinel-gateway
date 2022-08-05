@@ -1,0 +1,52 @@
+server:
+  port: 9001
+spring:
+  application:
+    name: test-gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.137.101:8848
+    sentinel:
+      transport:
+        dashboard: http://localhost:8080
+        port: 8719
+        client-ip: 20.30.3.201
+      datasource:
+        gateway-flow-rules:
+          nacos:
+            server-addr: 192.168.137.101:8848
+            dataId: ${spring.application.name}-gateway-flow-rules
+            groupId: SENTINEL_GROUP
+            data-type: json
+            rule-type: gw-flow
+        gateway-api-rules:
+          nacos:
+            server-addr: 192.168.137.101:8848
+            dataId: ${spring.application.name}-gateway-api-rules
+            groupId: SENTINEL_GROUP
+            data-type: json
+            rule-type: gw-api-group
+        degrade-rules:
+          nacos:
+            server-addr: 192.168.137.101:8848
+            dataId: ${spring.application.name}-degrade-rules
+            groupId: SENTINEL_GROUP
+            data-type: json
+            rule-type: degrade
+        system-rules:
+          nacos:
+            server-addr: 192.168.137.101:8848
+            dataId: ${spring.application.name}-system-rules
+            groupId: SENTINEL_GROUP
+            data-type: json
+            rule-type: system
+
+    gateway:
+      routes:
+        - id: test_route
+          uri: lb://test-product
+          predicates:
+            - Path=/api/product/**
+          filters:
+            - RewritePath=/api/(?<segment>.*),/$\{segment}
